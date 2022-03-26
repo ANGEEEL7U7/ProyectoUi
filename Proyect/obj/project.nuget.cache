@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cqPCTxsVxwru71fWvdTypRH/NT7h3QC9zdYl9YieUR2hhdnjUPL44PvaPVsKSe+fIqQpPcjNV8JV0ZJFCGnQgQ==",
+  "dgSpecHash": "AbIetgisOMN5UEai7cNZug6w2PiLLqGCHBoBRe+1zdwRTxA8ylL8HzUb/INB6QlzIg1iKGzmszINsgsustgJqw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\angel\\source\\repos\\Proyect\\Proyect\\Proyect.csproj",
+  "projectFilePath": "C:\\Users\\angel\\Documents\\repositorio\\ProyectoUi\\Proyect\\Proyect.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\angel\\.nuget\\packages\\blazorcomponentutilities\\1.6.0\\blazorcomponentutilities.1.6.0.nupkg.sha512",
     "C:\\Users\\angel\\.nuget\\packages\\blazorstrap\\1.3.3\\blazorstrap.1.3.3.nupkg.sha512",

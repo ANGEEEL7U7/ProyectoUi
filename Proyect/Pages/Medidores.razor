@@ -2,7 +2,7 @@
 <PageTitle>Lista Medidores</PageTitle>
 <div class="title">
     <div class="title_content">
-        <h1> Lista de Medidores</h1>
+        <h1 style="font-family: 'Montserrat', sans-serif;"> Lista de Medidores</h1>
     </div>
     <div class="title_button" style="margin-bottom: 20px;">
         <a href="/Medidores/add" class="btn btn-success">
@@ -27,8 +27,8 @@
 }
 else
 {
-    <table class="table table-hover">
-        <thead>
+    <table class="table table-hover" id="listas" >
+        <thead >
             <tr class="table-dark">
                 <th>Marca</th>
                 <th>Provedor</th>
@@ -36,10 +36,10 @@ else
                 
             </tr>
         </thead>
-        <tbody>
+        <tbody >
             @foreach (var Medidor in medidor)
             {
-                <tr >
+                <tr class="efecto">
                     <td scope="col">@Medidor.Marca</td>
                     <td scope="col">@Medidor.Proveedor</td>
                     <td scope="col">

@@ -10,7 +10,7 @@
 
 <div class="title">
     <div class="title_content">
-        <h1>Lista de Empresas</h1>
+        <h1 style="font-family: 'Montserrat', sans-serif;">Lista de Empresas</h1>
     </div>
     
 </div>
@@ -22,9 +22,9 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
+    <table class="table table-hover" id="listas">
+        <thead class="table-dark">
+            <tr >
                 <th>Rfc</th>
                 <th>Nombre de la empresa</th>
                 <th>Ubicacion</th>
@@ -37,7 +37,7 @@ else
         <tbody>
             @foreach (var Empresas in empresas)
             {
-                <tr>
+                <tr class="efecto">
                     <td>@Empresas.Rfc</td>
                     <td>@Empresas.Nombre_E</td>
                     <td>@Empresas.Ubicacion_E</td>                    
