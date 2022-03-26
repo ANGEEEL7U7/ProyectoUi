@@ -1,0 +1,31 @@
+@page "/Blogs/delete/{Id_Blog:int}"
+
+<PageTitle>Borrar Blog [@blogs?.Id_Blog]</PageTitle>
+<h1>Estas seguro que quieres borrar "@blogs?.Opinion"?</h1>
+
+<button type="submit" class="btn btn-primary" @onclick="Delete">
+            Eliminar
+        </button>
+        <a href="/Blogs" class="btn btn-danger"> Cancelar</a>
+
+@using Proyect.Data.Models;
+@using System.Net.Http;
+@using System.Net.Http.Json;
+@inject HttpClient http
+@inject NavigationManager NavigationManager
+@code{
+    [Parameter]
+    public int Id_Blog {get; set;} = 0;
+    Blog? blogs;
+
+    protected override async Task OnInitializedAsync(){
+        blogs = await http.GetFromJsonAsync<Blog>(requestUri: $"/api/Blog/{Id_Blog}");
+    }
+    private async Task Delete(){
+        var response = await http.DeleteAsync(requestUri: $"/api/Blog/{Id_Blog}");
+
+        if(response.IsSuccessStatusCode){
+            NavigationManager.NavigateTo("/Blogs");
+        }
+    }
+}

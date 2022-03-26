@@ -1,0 +1,73 @@
+@page "/Medidores"
+<PageTitle>Lista Medidores</PageTitle>
+<div class="title">
+    <div class="title_content">
+        <h1> Lista de Medidores</h1>
+    </div>
+    <div class="title_button" style="margin-bottom: 20px;">
+        <a href="/Medidores/add" class="btn btn-success">
+        <i class="oi oi-plus"></i>
+        &nbsp
+        Agregar
+        </a>
+    </div>
+</div>
+
+
+
+@using Proyect.Data.Models;
+@using System.Net.Http;
+@using System.Net.Http.Json;
+@inject HttpClient http
+
+
+@if (medidor == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr class="table-dark">
+                <th>Marca</th>
+                <th>Provedor</th>
+                <th>Opciones</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Medidor in medidor)
+            {
+                <tr >
+                    <td scope="col">@Medidor.Marca</td>
+                    <td scope="col">@Medidor.Proveedor</td>
+                    <td scope="col">
+                        <span class="Icon">
+                            <a href="/Medidores/update/@Medidor.Id_Medidor" class="oi oi-pencil" title="Editar">
+                            </a>
+                        </span>
+                        &nbsp
+                        <span class="Icon">
+                            <a href="/Medidores/delete/@Medidor.Id_Medidor" class="oi oi-trash" title="Borrar">
+                            </a>
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+@code {
+    private readonly string api = "api/Medidor";
+
+    private IList<Medidor>? medidor;
+
+    protected override async Task OnInitializedAsync()
+    {
+        medidor = await http.GetFromJsonAsync<IList<Medidor>>(api);
+    }
+}

@@ -1,0 +1,63 @@
+@page "/Empresa"
+
+<PageTitle>Empresas</PageTitle>
+
+@using Proyect.Data.Models;
+@using System.Net.Http;
+@using System.Net.Http.Json;
+@inject HttpClient http
+
+
+<div class="title">
+    <div class="title_content">
+        <h1>Lista de Empresas</h1>
+    </div>
+    
+</div>
+
+
+@if (empresas == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Rfc</th>
+                <th>Nombre de la empresa</th>
+                <th>Ubicacion</th>
+                <th>Fecha de registro</th>
+                <th>Matricula del medidor</th>
+                <th>Correo de la empresa</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Empresas in empresas)
+            {
+                <tr>
+                    <td>@Empresas.Rfc</td>
+                    <td>@Empresas.Nombre_E</td>
+                    <td>@Empresas.Ubicacion_E</td>                    
+                    <td>@Empresas.Fecha_Regristro.ToShortDateString()</td>
+                    <td>@Empresas.Id_Medidor_E</td>
+                    <td>@Empresas.Correo_E</td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private readonly string api = "api/Empresas";
+
+    private IList<Empresas>? empresas;
+
+    protected override async Task OnInitializedAsync()
+    {
+        empresas = await http.GetFromJsonAsync<IList<Empresas>>(api);
+    }
+}

@@ -1,0 +1,115 @@
+@page "/BlogEmpresa"
+
+<PageTitle>BlogsEmpresas</PageTitle>
+
+@using Proyect.Data.Models;
+@using System.Net.Http;
+@using System.Net.Http.Json;
+@inject HttpClient http
+
+
+<div class="title">
+    <div class="title_content">
+        <h1>BlogEmpresas</h1>
+    </div>
+    <div class="title_button">
+        <a href="/BlogEmpresa/add" class="btn btn-success">
+        <i class="oi oi-plus"></i>
+        &nbsp
+        Agregar
+        </a>
+    </div>
+</div>
+
+
+@if (blogempresas == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+   
+            <div class="row">
+        @foreach (var BlogEmpresa in blogempresas)
+            {
+                <div class="col-sm-3" style="margin-top: 10px">
+                    <div class="card" >
+                        <h3 class="card-header">@BlogEmpresa.Opinion_E</h3>
+                        <img class="card-img-top" src="@BlogEmpresa.UrlFoto_E" >
+                        <div class="card-body">
+                            <div class="card-title">
+                                Uso de agua: @BlogEmpresa.Uso_Agua_E
+                                @if (BlogEmpresa.Uso_Agua_E > 240)
+                                {
+                                    
+                                   <div class="progress">
+                                       <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                   </div>
+                                   <ul class="list-group list-group-flush"style="margin-top: 10px;">
+                                    <li class="list-group-item">
+                                        El medidor ah registrado un consumo alto de agua en la siguiente direccion:
+                                    </li>
+                                     
+                                    </ul>
+                                    <ul class="list-group list-group-flush"style="margin-top: 10px">
+                                    <li class="list-group-item">
+                                       @BlogEmpresa.Ubicacion_E
+                                    </li>
+                                     
+                                    </ul>
+                                }else{
+                                    if(BlogEmpresa.Uso_Agua_E >= 124){
+                                        <div class="progress">
+                                       <div class="progress-bar bg-warning" role="progressbar" style="width: 60%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                   </div>
+                                   <ul class="list-group list-group-flush"style="margin-top: 10px">
+                                    <li class="list-group-item">
+                                        El medidor ah registrado un consumo medio de agua en la siguiente direccion:
+                                    </li>
+                                     
+                                    </ul>
+                                    <ul class="list-group list-group-flush"style="margin-top: 10px">
+                                    <li class="list-group-item">
+                                       @BlogEmpresa.Ubicacion_E
+                                    </li>
+                                     
+                                    </ul>
+                                    }else{
+                                        <div class="progress">
+                                       <div class="progress-bar bg-info" role="progressbar" style="width: 30%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                   </div>
+                                   <ul class="list-group list-group-flush"style="margin-top: 10px">
+                                    <li class="list-group-item">
+                                        El medidor ah registrado un consumo bajo de agua en la siguiente direccion:
+                                    </li>
+                                     
+                                    </ul>
+                                    <ul class="list-group list-group-flush"style="margin-top: 10px">
+                                    <li class="list-group-item">
+                                      @BlogEmpresa.Ubicacion_E
+                                    </li>
+                                     
+                                    </ul>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            }
+    </div>
+        
+}
+
+@code {
+    private readonly string api = "api/BlogEmpresas";
+
+    private IList<BlogEmpresa>? blogempresas;
+
+    protected override async Task OnInitializedAsync()
+    {
+        blogempresas = await http.GetFromJsonAsync<IList<BlogEmpresa>>(api);
+    }
+}

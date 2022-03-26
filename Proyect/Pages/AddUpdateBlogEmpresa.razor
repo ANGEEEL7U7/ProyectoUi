@@ -1,0 +1,66 @@
+@page "/BlogEmpresa/add"
+@page "/BlogEmpresa/update/{Id_BlogEmpresa:int}"
+
+<EditForm Model="@blogEmpresa"  OnSubmit=@Save>
+   
+        <div class="mb-2">
+            <label class="form-label" for="Fotografia">Foto</label>
+            <InputText class="form-control" @bind-Value="@blogEmpresa.UrlFoto_E" id="Fotografia"> </InputText>
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="Uso_Agua">Uso de Agua</label>
+            <InputNumber class="form-control" @bind-Value="@blogEmpresa.Uso_Agua_E" id="Uso_Agua"> </InputNumber>
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="Ubicacion_E">Ubicacion</label>
+            <InputText class="form-control" @bind-Value="@blogEmpresa.Ubicacion_E" id="Ubicacion_E"> </InputText>
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="Opinion_E">Comentario</label>
+            <InputText class="form-control" @bind-Value="@blogEmpresa.Opinion_E" id="Opionion_E"> </InputText>
+        </div>
+        
+        <div class="mb-2">
+            <label class="form-label" for="Id_Medidor_fk_E">Matricula Medidor</label>
+            <InputNumber class="form-control" @bind-Value="@blogEmpresa.Id_Medidor_fk_E" id="Id_Medidor_fk_E"> </InputNumber>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            guardar
+        </button>
+        <a href="/BlogEmpresa" class="btn btn-danger"> Cancelar</a>
+    
+</EditForm>
+@using Proyect.Data.Models;
+@using System.Net.Http;
+@using System.Net.Http.Json;
+@inject HttpClient http
+@inject NavigationManager NavigationManager
+
+@code {
+    [Parameter]
+    public int? Id_BlogEmpresa {get; set;} = 0;
+    public bool isUpdate {get; set;} = false;
+    IList<BlogEmpresa>? blogEmpresas;
+    BlogEmpresa blogEmpresa = new BlogEmpresa();
+
+        protected override async Task OnInitializedAsync(){
+            blogEmpresas = await http.GetFromJsonAsync<IList<BlogEmpresa>>(requestUri:"/api/BlogEmpresas");
+                isUpdate = Id_BlogEmpresa != null;
+            if(isUpdate){
+                var response = await http.GetFromJsonAsync<BlogEmpresa>(requestUri: $"/api/BlogEmpresas/{Id_BlogEmpresa}");
+                    if(response != null){
+                        blogEmpresa = response;
+                    }
+            }
+            }
+        private async Task Save(){
+            HttpResponseMessage response;
+            if(isUpdate){
+                response = await http.PutAsJsonAsync<BlogEmpresa>(requestUri: $"/api/BlogEmpresas/{Id_BlogEmpresa}", blogEmpresa);
+            }else{
+                response = await http.PostAsJsonAsync<BlogEmpresa>(requestUri:"/api/BlogEmpresas",blogEmpresa);
+            }
+                NavigationManager.NavigateTo("/BlogEmpresa");
+        }
+}
+
